@@ -7,7 +7,7 @@ import { Layout, Input, Icon, Form, Button, Divider, message, notification } fro
 import { withRouter } from 'react-router-dom';
 // import axios from '@/api';
 // import { API } from '@/api/config';
-import '@/style/view-style/login.scss';
+import '../../style/view-style/login.scss';
 
 class login extends Component {
 	state = {
@@ -123,4 +123,4 @@ class login extends Component {
 
 }
 
-export default withRouter(Form.create(login))
+export default withRouter(Form.create()(login))

@@ -5,7 +5,7 @@
 import axios from 'axios';
 
 // 根据登录时登录信息如何存储 这里使用localStorage
-const token = localStotage.getItem('token');
+//const token = localStotage.getItem('token');
 
 const instance = axios.create({
     // baseURL: 'https://huxiangyan.react.com/api/',  baseUrl 根据实际需求决定是否进行设置
@@ -18,7 +18,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 // 设置拦截器
 instance.interceptors.request.use(
 	config => {
-		token && (config.headers.Authorization = taken)
+		//token && (config.headers.Authorization = taken)
 		return config;
 	},
 	error => {
