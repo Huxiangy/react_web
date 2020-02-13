@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "11bd28cfea55db94afc200bcb21d30ea",
+    "revision": "feb10dc43ce322de092a3bbb0bd52b58",
     "url": "/react_web/index.html"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react_web/static/css/6.62100c60.chunk.css"
   },
   {
-    "revision": "c6169944b7df95916b81",
+    "revision": "769daca471777a048624",
     "url": "/react_web/static/css/7.79b75540.chunk.css"
   },
   {
@@ -28,8 +28,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react_web/static/css/8.a3211f8f.chunk.css"
   },
   {
-    "revision": "a63a663bba74ea945119",
-    "url": "/react_web/static/css/9.1c5cf63c.chunk.css"
+    "revision": "bf280a8ca46b0de8e2b3",
+    "url": "/react_web/static/css/9.cec17eff.chunk.css"
   },
   {
     "revision": "ae09bbed4565a682ffea",
@@ -80,15 +80,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react_web/static/js/6.cd1d98c3.chunk.js"
   },
   {
-    "revision": "c6169944b7df95916b81",
-    "url": "/react_web/static/js/7.e6490a99.chunk.js"
+    "revision": "769daca471777a048624",
+    "url": "/react_web/static/js/7.2f80498a.chunk.js"
   },
   {
     "revision": "d83d689da8145146fb79",
     "url": "/react_web/static/js/8.c2d6d4c8.chunk.js"
   },
   {
-    "revision": "a63a663bba74ea945119",
+    "revision": "bf280a8ca46b0de8e2b3",
     "url": "/react_web/static/js/9.bfd80295.chunk.js"
   },
   {
@@ -96,15 +96,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react_web/static/js/main.bf472dbe.chunk.js"
   },
   {
-    "revision": "a74da62da4465775cb38",
-    "url": "/react_web/static/js/runtime-main.cdd7a546.js"
+    "revision": "aa4523650de15d62dbc4",
+    "url": "/react_web/static/js/runtime-main.c714fdc4.js"
   },
   {
-    "revision": "3dde1d4150a3ed045b3e35faeca3ab13",
-    "url": "/react_web/static/media/login.3dde1d41.jpg"
-  },
-  {
-    "revision": "c8e6ea778294450a154ee24ff72ce39c",
-    "url": "/react_web/static/media/user.c8e6ea77.jpg"
+    "revision": "266caa8ddd9ffa44c5244989229807a4",
+    "url": "/react_web/static/media/login.266caa8d.jpg"
   }
 ]);
