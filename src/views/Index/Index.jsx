@@ -33,7 +33,7 @@ class Index extends Component {
 
     initalECharts() {
     	let name_title = "新冠状病毒感染引起的肺炎疫情情况"
-		let subname = '数据爬自中华人民共和国卫生部，时间截止于2020年2月12日17时\n，\n由于底图来源问题，图中未显示中国香港（确诊49例），\n中国澳门（确诊10例），中国台湾（确诊18例）'
+		let subname = '数据来自网易疫情，时间截止于2020年2月12日17时\n，\n由于底图来源问题，图中未显示中国香港（确诊49例），\n中国澳门（确诊10例），中国台湾（确诊18例）'
 		let nameColor = " rgb(55, 75, 113)"
 		let name_fontFamily = '等线'
 		let subname_fontSize = 15
