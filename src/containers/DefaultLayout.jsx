@@ -74,6 +74,7 @@ class DefaultLayout extends Component {
     }
 
     render() {
+        console.log(this.props)
         let { menuClick, menuToggle } = this.props
         let { auth } = JSON.parse(localStorage.getItem('user')) ? JSON.parse(localStorage.getItem('user')) : ''
         return (

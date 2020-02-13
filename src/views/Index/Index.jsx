@@ -11,10 +11,9 @@ import 'echarts/lib/component/title';
 // 引入中国地图
 import 'echarts/map/js/china';
 import geoJson from 'echarts/map/json/china.json';
-// import { geoCoordMap,provienceData } from "./geo";
+import { DATA , geoCoordMap } from '@/api/listData';
 
 import { API } from '@/api/config';
-import { DATA } from '@/api/listData';
 import '../../style/view-style/index.scss'
 
 
@@ -24,7 +23,7 @@ class Index extends Component {
 
 	constructor (props) {
 		super(props);
-		this.illnessData = this.handleDatas(DATA);
+		
 
 
 	}
@@ -33,193 +32,199 @@ class Index extends Component {
     }
 
     initalECharts() {
-    	const data = [
-            { name: '黑龙江'},
-            { name: '吉林'},
-            { name: '辽宁' },
-            { name: '内蒙古' },
-            { name: '北京' },
-            { name: '天津' },
-            { name: '河北' },
-            { name: '山东' },
-            { name: '山西' },
-            { name: '江苏' },
-            { name: '上海' },
-            { name: '浙江' },
-            { name: '福建' },
-            { name: '广东' },
-            { name: '海南' },
-            { name: '台湾' },
-            { name: '香港' },
-            { name: '澳门' },
-            { name: '河南' },
-            { name: '安徽' },
-            { name: '江西' },
-            { name: '广东' },
-            { name: '陕西' },
-            { name: '湖北' },
-            { name: '湖南' },
-            { name: '广西' },
-            { name: '宁夏' },
-            { name: '重庆' },
-            { name: '贵州' },
-            { name: '四川' },
-            { name: '云南' },
-            { name: '甘肃' },
-            { name: '青海' },
-            { name: '西藏' },
-            { name: '新疆' }
-        ];
+    	let name_title = "新冠状病毒感染引起的肺炎疫情情况"
+		let subname = '数据爬自中华人民共和国卫生部，时间截止于2020年2月12日17时\n，\n由于底图来源问题，图中未显示中国香港（确诊49例），\n中国澳门（确诊10例），中国台湾（确诊18例）'
+		let nameColor = " rgb(55, 75, 113)"
+		let name_fontFamily = '等线'
+		let subname_fontSize = 15
+		let name_fontSize = 18
+		let mapName = 'china'
+		let max = 5880,
+		    min = 9; // todo 
+		
+        let illnessData = this.handleDatas(DATA);
+    	const data = [];
+
+    	for (let i = 0; i <= illnessData.length - 1; i++) {
+    		let obj = {
+    			name : illnessData[i].name,
+    			value: illnessData[i].value[0].value
+    		}
+
+    		data.push(obj);
+    	}
+
+
 
         echarts.registerMap('china', geoJson);
         const myChart = echarts.init(document.getElementById('mainMap'));
 
+        let option = {
+			    title: {
+			        text: name_title,
+			        subtext: subname,
+			        x: 'center',
+			        textStyle: {
+			            color: nameColor,
+			            fontFamily: name_fontFamily,
+			            fontSize: name_fontSize
+			        },
+			        subtextStyle: {
+			            fontSize: subname_fontSize,
+			            fontFamily: name_fontFamily
+			        }
+			    },
+			    tooltip: {
+			        trigger: 'item',
+			        formatter: function(params) {
+			            if (typeof(params.value)[2] == "undefined") {
+			                let toolTiphtml = ''
+			                for (let i = 0; i < illnessData.length; i++) {
+			                    if (params.name == illnessData[i].name) {
+			                        toolTiphtml += illnessData[i].name + ':<br>'
+			                        for (let j = 0; j < illnessData[i].value.length; j++) {
+			                            toolTiphtml += illnessData[i].value[j].name + ':' + illnessData[i].value[j].value + "<br>"
+			                        }
+			                    }
+			                }
+			                //console.log(toolTiphtml)
+			                // console.log(convertData(data))
+			                return toolTiphtml;
+			            } else {
+			                let toolTiphtml = ''
+			                for (let i = 0; i < illnessData.length; i++) {
+			                    if (params.name == illnessData[i].name) {
+			                        toolTiphtml += illnessData[i].name + ':<br>'
+			                        for (let j = 0; j < illnessData[i].value.length; j++) {
+			                            toolTiphtml += illnessData[i].value[j].name + ':' + illnessData[i].value[j].value + "<br>"
+			                        }
+			                    }
+			                }
+			                console.log(toolTiphtml)
+			                // console.log(convertData(data))
+			                return toolTiphtml;
+			            }
+			        }
+			    },
+			    visualMap: {
+			        show: true,
+			        min: 1,
+			        max: 600,
+			        left: 'left',
+			        top: 'bottom',
+			        text: ['高', '低'], // 文本，默认为数值文本
+			        calculable: true,
+			        seriesIndex: [1],
+			        inRange: {
+			            color: ['#FAB354', '#F90C05'] 
+			        }
+			    },
+			    geo: {
+			        show: true,
+			        map: mapName,
+			        label: {
+			            normal: {
+			                show: true,
+			                textStyle: {
+			                	color: '#000',
+			                	fontSize: 12
+			                }
+			            },
+			            emphasis: {
+			                show: false,
+			                areaColor: '#fff'
+			            }
+			        },
+			        roam: true,
+			        itemStyle: {
+			            normal: {
+			                areaColor: '#031525',
+			                borderColor: '#3B5077',
+			            },
+			            emphasis: {
+			                areaColor: '#2B91B7',
+			            }
+			        }
+			    },
+			    series: [{
+			            name: '散点',
+			            type: 'scatter',
+			            coordinateSystem: 'geo',
+			            data: this.convertData(data),
+			            symbolSize: function(val) {
+			                return val[2] / 100;
+			            },
+			            label: {
+			                normal: {
+			                    formatter: '{b}',
+			                    position: 'right',
+			                    show: true
+			                },
+			                emphasis: {
+			                    show: true
+			                }
+			            },
+			            itemStyle: {
+			                normal: {
+			                    color: '#05C3F9'
+			                }
+			            }
+			        },
+			        {
+			            type: 'map',
+			            map: mapName,
+			            geoIndex: 0,
+			            aspectScale: 5.75, //长宽比
+			            showLegendSymbol: false, // 存在legend时显示
+			            label: {
+			                normal: {
+			                    show: true
+			                },
+			                emphasis: {
+			                    show: false,
+			                    textStyle: {
+			                        color: '#fff'
+			                    }
+			                }
+			            },
+			            roam: true,
+			            itemStyle: {
+			                normal: {
+			                    areaColor: '#031525',
+			                    borderColor: '#3B5077',
+			                },
+			                emphasis: {
+			                    areaColor: '#2B91B7'
+			                }
+			            },
+			            animation: false,
+			            data: data
+			        }
 
-        myChart.setOption({
-                tooltip: {
-                    show: false, // 不显示提示标签
-                    // formatter: '{b}', // 提示标签格式
-                    //鼠标放地图的某一块，显示的提示框
-                    formatter(params, ticket, callback) {
-                        console.log(params)
-                        return `1`
-                    },
-                    backgroundColor: '#ff7f50', // 提示标签背景颜色
-                    textStyle: { color: '#fff' } // 提示标签字体颜色
-                },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    top: '10%',
-                    bottom: '10%',
-                    containLabel: true
-                },
-                geo: {
-                    map: 'china',
-                    roam: false,
-                    zoom: 1.2,
-                    tooltip: {
-                        show: false, // 不显示提示标签
-                    },
-                    label: {
-                        normal: {
-                            show: false, // 显示省份标签
-                            textStyle: { color: '#c71585' }// 省份标签字体颜色
-                        },
-                        emphasis: {// 对应的鼠标悬浮效果
-                            show: false,
-                            textStyle: { color: '#800080' }
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            borderWidth: 0.5, // 区域边框宽度
-                            borderColor: '#000', // 区域边框颜色
-                            areaColor: '#ffefd5', // 区域颜色
-                            label: { show: false }
-                        },
-                        emphasis: {
-                            show: false,
-                            borderWidth: 0.5,
-                            borderColor: '#4b0082',
-                            areaColor: '#ffdead',
-                        }
-                    },
-                },
-                series: [
-                    {
-                        type: 'scatter',
-                        coordinateSystem: 'geo',
-                        data: this.convertData(data),
-                        symbolSize: 1,
-                        symbolRotate: 40,
-                        label: {
-                            normal: {
-                                formatter: '{b}',
-                                position: 'top',
-                                show: true
-                            },
-                            emphasis: {
-                                show: false
-                            }
-                        },
-                        tooltip: {
-                            show: false, // 不显示提示标签
-                            // 显示提示的标签
-                            formatter(name) {
-                                return `Legend ${name}`;
-                            }, // 提示标签格式
-                            backgroundColor: '#fff', // 提示标签背景颜色
-                            borderColor: '#ccc',
-                            borderWidth: 5,
-                            textStyle: { color: '#000' } // 提示标签字体颜色
-                            },
-                        itemStyle: {
-                            normal: {
-                                color: 'black'
-                            }
-                        }
-                    },
-                    {
-                        type: 'map',
-                        mapType: 'china',
-                        roam: false,
-                        zoom: 1.2,
-                        tooltip: {
-                            show: false, // 不显示提示标签
-                        },
-                        label: {
-                            normal: {
-                                show: false // 显示省份标签
-                            },
-                            emphasis: {
-                                show: false,
-                            }
-                        },
-                        itemStyle: {
-                            normal: {
-                                borderWidth: 0.5, // 区域边框宽度
-                                borderColor: '#fff', // 区域边框颜色
-                                label: { show: false }
-                            },
-                            emphasis: {
-                                show: false,
-                            }
-                        },
-                        // geoIndex: 0,
-                        //鼠标放入地图显示提示框
-                        tooltip: { show: true },
-                        data: provienceData
-                    }
-                ],
-        })
+			    ]
+		};
+
+        myChart.setOption(option);
 
 
     }
 
-    // convertData(data) {
-    //     const res = [];
-    //     for (let i = 0; i < data.length; i++) {
-    //         const geoCoord = geoCoordMap[data[i].name];
-    //         if (geoCoord) {
-    //             res.push({
-    //                 name: data[i].name,
-    //                 value: geoCoord.concat(data[i].area),
-    //                 area: data[i].area,
-    //                 type: data[i].type,
-    //                 InValue: data[i].InValue
-    //             });
-    //         }
-    //     }
-    //     return res;
-    // }
-
-    // convert() {
-    //     return '1';
-    // }
+    convertData(data) {
+        const res = [];
+	    // for (let i = 0; i < data.length; i++) {
+	    //     const geoCoord = geoCoordMap[data[i].name];
+	    //     if (geoCoord) {
+	    //         res.push({
+	    //             name: '',
+	    //             value: geoCoord.concat(data[i].area)
+	    //         });
+	    //     }
+	    // }
+        return res;
+    }
 
 
-	// 处理数据
+	// 处理疫情数据
 	handleDatas(data = {}) {
 		let listData = data.data.areaTree[0];
 		let arr = [] ;
@@ -228,12 +233,19 @@ class Index extends Component {
 			//if () {}  这里可对 值是否存在进行判断
 			let obj = {};
 			// console.log(values)
-			obj[values.name] = {
-				confirm: values.total.confirm,
-				suspect: values.total.suspect,
-				heal: values.total.heal,
-				dead: values.total.dead
-			};
+			obj.name = values.name;
+			obj.value = [
+				{
+		            name: "确诊",
+		            value: values.total.confirm
+		        }, {
+		            name: "死亡",
+		            value: values.total.dead
+		        }, {
+		            name: "治愈",
+		            value: values.total.heal
+		        }
+			];
 			arr.push(obj);
 		})
 		return arr;
@@ -248,19 +260,14 @@ class Index extends Component {
 	}
 
 	componentWillMount() {
-       console.log(this.illnessData);
-
-
 		// 本来想使用网易的疫情数据， 但是有跨域问题 这里先模拟数据
 		//this.getChinaIllnessList()
-
-
 	}
 
 
     render() {
         return (
-            <div id='mainMap'>hello</div>
+            <div id='mainMap' style={{ width: '100%', height: '500px' }}>hello</div>
         )
     }
 }

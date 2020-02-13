@@ -10,7 +10,10 @@ const menu = [
         key: '/public',
         icon: 'appstore',
         auth: [1],
-        subs: [{ title: '通用一', key: '/public/1', icon: '' }, { title: '通用二', key: '/public/2', icon: '' }]
+        subs: [
+            { title: '通用一', key: '/public/1', icon: '' }, 
+            { title: '通用二', key: '/public/2', icon: '' }
+        ]
     },
     {
         title: '权限管理',
